@@ -5,7 +5,7 @@ use api::willys::{
 };
 
 use actix_files::{Files};
-use actix_web::{middleware::Logger, get, post, web, App, HttpResponse, HttpServer, Responder, HttpRequest};
+use actix_web::{middleware::Logger, App, HttpServer};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -20,7 +20,7 @@ async fn main() -> std::io::Result<()> {
 
         App::new()
             .wrap(logger)
-            .default_service(Files::new("", "frontend/build"))
+            .default_service(Files::new("", "react/build"))
             .service(get_product)
 
     })
