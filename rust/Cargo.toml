@@ -10,6 +10,7 @@ serde = { version = "*", features = ["derive"] }
 serde_json = "*"
 actix-web = "4"
 actix-files = "*"
+actix-cors = "*"
 env_logger = "*"
 log = "*"
 reqwest = { version = "0.11", features = ["json"] }
