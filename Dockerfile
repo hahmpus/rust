@@ -1,8 +1,19 @@
-FROM rust:1.31
+FROM rust:1.60 as rust-builder
+WORKDIR /usr/src/calorie
+COPY rust .
+RUN cargo build --release
 
-WORKDIR /usr/src/myapp
-COPY . .
+FROM node:18 as react-builder
+WORKDIR /usr/src/app
+COPY react .
+RUN npm install 
+RUN npm run build
 
-RUN cargo install --path .
+FROM debian:buster-slim
+#RUN apt-get update && apt-get install -y extra-runtime-dependencies && rm -rf /var/lib/apt/lists/*
+COPY --from=rust-builder /usr/src/calorie/target/release/calorie /app/calorie
+COPY --from=react-builder /usr/src/app/build /app/react
 
-CMD ["rust"]
+WORKDIR /app
+
+CMD ["./calorie"]
