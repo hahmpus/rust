@@ -10,10 +10,13 @@ RUN npm install
 RUN npm run build
 
 FROM debian:buster-slim
-#RUN apt-get update && apt-get install -y extra-runtime-dependencies && rm -rf /var/lib/apt/lists/*
 COPY --from=rust-builder /usr/src/calorie/target/release/calorie /app/calorie
-COPY --from=react-builder /usr/src/app/build /app/react
+COPY --from=react-builder /usr/src/app/build /app/react/build
 
 WORKDIR /app
 
 CMD ["./calorie"]
+
+# cargo run --manifest-path rust/Cargo.toml
+# docker build -t calorie .
+# docker run -p 8080:8080 calorie

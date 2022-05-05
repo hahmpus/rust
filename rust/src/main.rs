@@ -20,7 +20,7 @@ async fn main() -> std::io::Result<()> {
 
         App::new()
             .wrap(logger)
-            .default_service(Files::new("", "./react/").index_file("index.html"))
+            .default_service(Files::new("", "./react/build").index_file("index.html"))
             .service(get_product)
 
     })
