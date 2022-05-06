@@ -17,14 +17,13 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
 
-        let logger = Logger::default();
-        //HKTODO FIX CORS
-        let cors = Cors::default().allow_any_origin();
+        let logger:Logger   = Logger::default();
+        let cors:Cors       = Cors::default().allow_any_origin();
 
         App::new()
             .wrap(cors)
             .wrap(logger)
-            .default_service(Files::new("", "./react/build").index_file("index.html"))
+            .default_service(Files::new("", "./react").index_file("index.html"))
             .service(get_product)
 
     })
