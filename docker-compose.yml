@@ -1,6 +1,7 @@
 version: '3.3'
 services:
   calorie:
+      build: .
       ports:
           - '8080:8080'
       container_name: calorie-docker
@@ -8,6 +9,8 @@ services:
   mongo:
     image: mongo
     restart: always
+    volumes:
+      - ./data/mongo:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
