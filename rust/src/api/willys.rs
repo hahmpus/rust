@@ -1,19 +1,19 @@
 static USER_AGENT:&str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36"; 
+use mongodb::{bson::doc, options::IndexOptions, Client, Collection, IndexModel};
 
 use actix_web::{
     get, 
     post, 
     put,
     error::ResponseError,
-    web::Path,
-    web::Json,
-    web::Data,
+    web::{Path, Json, Data},
+    HttpRequest,
     HttpResponse,
+    Responder,
     http::{header::ContentType, StatusCode}
 };
 use serde::{Serialize, Deserialize};
-
-
+use std::error::Error;
 
 //INGRIDIENT CODE
 #[derive(Deserialize, Serialize, Debug)]
@@ -52,5 +52,19 @@ pub async fn get_product(product_id: Path<ProductIdentifier>) -> Json<Ingridient
         .json::<Ingridient>()
         .await.unwrap();
 
+
+
     Json(res)
+}
+
+/// Adds a new user to the "users" collection in the database.
+#[post("/api/willys/test")]
+async fn test(client: Data<Client>) -> HttpResponse {
+    println!("Databases:");
+    for name in client.list_database_names(None, None).await.unwrap() {
+       println!("- {}", name);
+    }
+
+    return HttpResponse::Ok().body("Hello, world!");
+
 }
