@@ -58,7 +58,7 @@ pub async fn get_product(product_id: Path<ProductIdentifier>) -> Json<Ingridient
 }
 
 /// Adds a new user to the "users" collection in the database.
-#[post("/api/willys/test")]
+#[post("/api/test")]
 async fn test(client: Data<Client>) -> HttpResponse {
     println!("Databases:");
     for name in client.list_database_names(None, None).await.unwrap() {

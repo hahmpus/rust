@@ -9,8 +9,8 @@ COPY react .
 RUN npm install 
 RUN npm run build
 
-FROM debian:buster-slim
-RUN apt-get update && apt-get install libssl1.1 openssl ca-certificates
+FROM debian:bullseye
+RUN apt-get update && apt-get -y install libssl1.1 openssl ca-certificates
 COPY --from=rust-builder /usr/src/calorie/target/release/calorie /app/calorie
 COPY --from=react-builder /usr/src/app/build /app/react
 
