@@ -1,0 +1,10 @@
+API
+
+WILLYS
+    LIST
+    GET
+
+RECIPIES
+    ADD
+    EDIT
+    SAVE

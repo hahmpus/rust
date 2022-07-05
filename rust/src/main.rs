@@ -4,6 +4,12 @@ use api::willys::{
     get_product
 };
 
+use api::recipie::{
+    get_recipie,
+    add_recipie,
+    update_recipie
+};
+
 use actix_files::{Files};
 use actix_web::{middleware::Logger, App, HttpServer, web};
 use actix_cors::Cors;
@@ -17,7 +23,7 @@ async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_BACKTRACE", "1");
     env_logger::init();
 
-    let client = Client::with_uri_str("mongodb://mongo:27017").await.expect("failed to connect");
+   let client = Client::with_uri_str("mongodb://calorie:9DSd!f*vRJ28&TY!@mongo:27017/test").await.expect("failed to connect");
 
     HttpServer::new(move|| {
 
@@ -30,6 +36,9 @@ async fn main() -> std::io::Result<()> {
             .wrap(logger)
             .default_service(Files::new("", "./react").index_file("index.html"))
             .service(get_product)
+            .service(get_recipie)
+            .service(add_recipie)
+            .service(update_recipie)
 
     })
     .bind(("0.0.0.0", 8080))?

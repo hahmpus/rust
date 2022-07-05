@@ -10,7 +10,7 @@ function App() {
 
       <div className="App">
           <ProductSummary id="101231193_ST"/>
-          <button/>
+          <button>TEST</button>
       </div>
   );
 }
