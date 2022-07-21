@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { ActionIcon, AppShell, Button, ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
-import Navbar from './app/Navbar'
+import Navbar from './components/Navbar'
+import Recipies from './components/routes/Recipies';
 
 function AppWrapper() {
 
@@ -14,13 +16,16 @@ function AppWrapper() {
         fixed
         padding={0}
         styles={(theme) => ({
-          main: {backgroundColor: theme.colorScheme == 'dark' ? theme.colors.dark[8] : theme.colors.gray[0], color: 'white'},
+          main: {backgroundColor: theme.colorScheme == 'dark' ? theme.colors.dark[8] : theme.colors.gray[0], color: 'black'},
         })}
         navbar={<Navbar />}
       >
         {/* breadcrumbs??? collapse menu button???*/}
-        <App />
-
+        
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/recipies/" element={<Recipies />} />
+        </Routes>
 
       </AppShell>
   );
@@ -32,8 +37,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-      <MantineProvider theme={{ colorScheme: 'dark'}}>
-        <AppWrapper />
+      <MantineProvider theme={{ colorScheme: 'light'}}>
+        <BrowserRouter>
+          <AppWrapper />
+        </BrowserRouter>
       </MantineProvider>
   </React.StrictMode>
 );

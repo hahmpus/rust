@@ -7,7 +7,8 @@ use api::willys::{
 use api::recipie::{
     get_recipie,
     add_recipie,
-    update_recipie
+    update_recipie,
+    list_recipies
 };
 
 use actix_files::{Files};
@@ -39,6 +40,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_recipie)
             .service(add_recipie)
             .service(update_recipie)
+            .service(list_recipies)
 
     })
     .bind(("0.0.0.0", 8080))?

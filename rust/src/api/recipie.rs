@@ -1,4 +1,4 @@
-use mongodb::{bson::doc, bson::to_document, Client, Collection};
+use mongodb::{bson::doc, bson::to_document, Client, Collection, Cursor};
 use futures::StreamExt;
 use actix_web::{
     get,
@@ -21,7 +21,21 @@ pub struct ActualRecipie {
     //pub ingredients: Vec<Ingridient>,
 }
 
-//GET
+#[get("/api/list_recipies")]
+pub async fn list_recipies(client: Data<Client>) -> HttpResponse {
+    let collection: Collection<Recipie> = client.database("calorie").collection("recipies");
+
+    let mut cursor = collection.find(None, None).await.unwrap();
+    let mut recipies: Vec<Recipie> = Vec::new();
+
+    while let Some(doc) = cursor.next().await {
+        let doc = doc.unwrap();
+        recipies.push(doc);
+    }
+
+    HttpResponse::Ok().json(recipies)
+}
+
 #[get("/api/recipie/{id}")]
 pub async fn get_recipie(client: Data<Client>, id: Path<String>) -> HttpResponse {
     let id = id.into_inner();
@@ -81,5 +95,3 @@ pub async fn update_recipie(client: Data<Client>, id: Path<String>, mut data: Pa
         Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
 }
-
-//HKTODO REMEMBER TO SWITCH OUT NAME FOR ID
