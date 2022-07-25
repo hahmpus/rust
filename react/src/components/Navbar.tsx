@@ -1,8 +1,9 @@
 import React from 'react';
 import { Routes, Route, NavLink } from "react-router-dom";
+import { _t } from '../utils/translate';
 
 import { Button, Center, Divider, Image, Navbar as Nav, Text } from "@mantine/core";
-import Recipies from './routes/Recipies';
+import Recipies from './recipie/editor/routes/Recipies';
 
 export default function Navbar () {
   return <>
@@ -32,13 +33,13 @@ export default function Navbar () {
 
         <NavLink to="/">
           <Button>
-            Home
+            {_t('Home')}
           </Button>
         </NavLink>
 
         <NavLink to="/recipies">
           <Button>
-            Recipies
+            {_t('Recipies')}
           </Button>
         </NavLink>
         

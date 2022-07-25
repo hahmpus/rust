@@ -7,7 +7,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { ActionIcon, AppShell, Button, ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import Navbar from './components/Navbar'
-import Recipies from './components/routes/Recipies';
+import Recipies from './components/recipie/editor/routes/Recipies';
+import RecipieEditor from './components/recipie/RecipieEditor';
 
 function AppWrapper() {
 
@@ -24,7 +25,7 @@ function AppWrapper() {
         
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/recipies/" element={<Recipies />} />
+          <Route path="/recipies/" element={<RecipieEditor />} />
         </Routes>
 
       </AppShell>

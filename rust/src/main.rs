@@ -1,7 +1,8 @@
 mod api;
 
-use api::willys::{
-    get_product
+
+use api::ica::{
+    search
 };
 
 use api::recipie::{
@@ -36,7 +37,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(cors)
             .wrap(logger)
             .default_service(Files::new("", "./react").index_file("index.html"))
-            .service(get_product)
+            .service(search)
             .service(get_recipie)
             .service(add_recipie)
             .service(update_recipie)

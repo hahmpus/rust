@@ -1,48 +1,61 @@
+import { TextInput } from "@mantine/core";
+import { render } from "@testing-library/react";
 import Immutable from "immutable";
 import { useEffect, useState } from "react";
+
 import request from "../../utils/request";
+import delay   from "../../utils/delay"
 
 interface RecipieProps {
-    id: string
-    name: string
+    id?: string
+    name?: string
 }
 
 function getRecipe(id:string) {
-    return true;
-}
-
-function saveRecipie() {
-    return true;
-}
-
-function searchProduct(phrase:string) {
-    return true;
-}
-
-function getProduct(id:string) {
-    request("GET", '/api/willys/'+id, null, null, (data, code) => {
+    if(id)
+    request("GET", '/api/recipie/'+id, null, null, (response, code) => {
         if(code === 200) {
-            return data;
+            return response;
         } else {
             return false
         }
     })
 }
 
-function addProduct(recipie:Immutable.Map<any, any>, id:string) {
-    let product:any = getProduct(id);
-    if(product) {
-        return recipie.set('products', recipie.get('products').push(product));
-    } else {
-        return recipie;
+function saveRecipie(id:string, recipie:Immutable.Map<any, any>) {
+
+    let sending:any = recipie;
+    if(Immutable.isMap(recipie)) {
+        sending = recipie.toJS()
     }
+
+    request("GET", '/api/recipie/'+id, null, sending, (response, code) => {
+        if(code === 200) {
+            return response;
+        } else {
+            return false
+        }
+    })
 }
 
-function removeProduct(recipie:Immutable.Map<any, any>, id:string) {
-    return recipie.set('products', recipie.get('products').filter((product:any) => {
-            return product.get('id') !== id;
-    }));
+function searchProduct(phrase:string) {
+
+    if(phrase) {
+        request("GET", '/api/ica/search/'+phrase, null, null, (response, code) => {
+            if(code === 200) {
+                return response;
+            } else {
+                return false
+            }
+        })
+    }
+
 }
+
+function addProduct(recipie:Immutable.Map<any, any>, id:string) {
+
+}
+
 
 export default function RecipieEditor(props:RecipieProps) {
 
@@ -55,7 +68,17 @@ export default function RecipieEditor(props:RecipieProps) {
                 setRecipie(recipie);
             }
         }
-    })
+    });
 
+    return (<>
+        <h1>RECIPIE EDITOR</h1>
+        <TextInput
+            placeholder={"Search"}
+            label={false}
+            onChange={(e) => delay('product_search', () => searchProduct(e.target.value))}
+        >
+
+        </TextInput>   
+    </>)
 
 }
